@@ -1,5 +1,11 @@
 import java.util.Arrays;
 
+/**
+* Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+* You may assume that each input would have exactly one solution.
+* Input: numbers={2, 7, 11, 15}, target=9
+* Output: index1=1, index2=2
+*/
 public class Solution {
     public static int[] twoSum(int[] nums, int target) {
         int[] sortNum = nums.clone(); //拷贝数组nums
@@ -9,12 +15,13 @@ public class Solution {
         //遍历数组，通过二分查找获取是否存在一个
         for(int i = 0 ; i < size ; i++)
         {
-            int result = target - sortNum[i];
             int count = 0; 
+            int index1 = 0;
+            int index2 = 0;
+            int result = target - sortNum[i];
             //如果能够查询到数组中存在result值
-            if(Arrays.binarySearch(sortNum,result) != -1)
+            if(Arrays.binarySearch(sortNum,result) > 0)
             {
-            
                 for(int j = 0 ; j < size ; j++)
                 {
                     if((nums[j] == sortNum[i]) || (nums[j] == result))
@@ -22,15 +29,19 @@ public class Solution {
                         count++;
                         if(count == 2)
                         {
-                            answers[1] = j;
+                            index2 = j;
+                            answers[0] = index1 < index2 ? index1 : index2;
+                            answers[1] = index2 < index1 ? index1 : index2;
                             break;
                         }
-                        answers[0] = j;
+                        else
+                        {
+                            index1 = j;
+                        }
                     }
                 }
             }
         }
         return answers;
     }
-   
 }
